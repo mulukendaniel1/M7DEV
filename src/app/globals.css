@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #070a12;
+  --foreground: #f4f7ff;
+  --muted: #929bb0;
+  --accent: #4385ff;
+  --accent-light: #75a8ff;
+  --surface: #101624;
+  --border: rgba(255, 255, 255, 0.09);
 }
 
 @theme inline {
@@ -12,15 +17,195 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
 }
 
 body {
+  margin: 0;
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  color: white;
+  background: rgba(67, 133, 255, 0.5);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.site-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.site-shell::before {
+  position: absolute;
+  z-index: -1;
+  top: -300px;
+  left: 50%;
+  width: 900px;
+  height: 700px;
+  content: "";
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse,
+    rgba(35, 99, 220, 0.19) 0%,
+    rgba(18, 48, 105, 0.1) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.site-container {
+  width: min(1160px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.nav-glass {
+  background: rgba(9, 13, 24, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.nav-link {
+  color: #a5aec1;
+  transition: color 180ms ease;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: #ffffff;
+}
+
+.blue-text {
+  color: var(--accent-light);
+}
+
+.blue-gradient {
+  background: linear-gradient(110deg, #ffffff 10%, #8db8ff 48%, #4385ff 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(120, 160, 220, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 160, 220, 0.035) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+.hero-card {
+  background: linear-gradient(
+    145deg,
+    rgba(30, 47, 78, 0.85),
+    rgba(12, 19, 34, 0.92)
+  );
+  border: 1px solid rgba(142, 180, 255, 0.2);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.35),
+    0 0 70px rgba(40, 105, 235, 0.1);
+  backdrop-filter: blur(20px);
+}
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 22px;
+  border: 1px solid rgba(130, 175, 255, 0.35);
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(115deg, #3479f6, #2058c9);
+  box-shadow: 0 8px 28px rgba(39, 104, 231, 0.25);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px rgba(39, 104, 231, 0.38);
+}
+
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 22px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: #e0e7f5;
+  background: rgba(255, 255, 255, 0.035);
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+.secondary-button:hover {
+  border-color: rgba(130, 175, 255, 0.35);
+  background: rgba(255, 255, 255, 0.075);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #9bbcff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #55dc9a;
+  box-shadow: 0 0 12px rgba(85, 220, 154, 0.8);
+}
+
+.section-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+@media (max-width: 640px) {
+  .site-container {
+    width: min(100% - 32px, 1160px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
